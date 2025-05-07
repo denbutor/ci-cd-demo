@@ -1,9 +1,15 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    with open("frontend/index.html") as f:
-        return HTMLResponse(f.read())
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/api")
+def read_root():
+    return {"message": "Hello from FastAPI"}
