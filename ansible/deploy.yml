@@ -1,0 +1,9 @@
+---
+- name: Deploy FastAPI app
+  hosts: web
+  tasks:
+    - name: Stop old container
+      shell: docker stop ci-cd-demo || true && docker rm ci-cd-demo || true
+
+    - name: Run new container
+      shell: docker run -d --name ci-cd-demo -p 8000:8000 ci-cd-demo

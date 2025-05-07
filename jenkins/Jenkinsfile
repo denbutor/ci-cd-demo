@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git 'https://github.com/your-username/ci-cd-demo.git'
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                sh 'docker build -t ci-cd-demo .'
+            }
+        }
+
+        stage('Deploy with Ansible') {
+            steps {
+                sh 'ansible-playbook -i ansible/hosts ansible/deploy.yml'
+            }
+        }
+    }
+}
